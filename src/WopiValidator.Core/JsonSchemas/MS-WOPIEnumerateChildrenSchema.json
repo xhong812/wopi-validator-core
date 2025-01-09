@@ -1,0 +1,18 @@
+﻿{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "title": "Full WOPI EnumerateChildren  JSON Schema",
+  "description": "A WOPI EnumerateChildren JSON response",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "FolderName",
+    "OwnerId"
+  ],
+  "properties": {
+    "Children": {
+      "Name": "<name>",
+      "Url": "<url>",
+      "Version": "<version>"
+    }
+  }
+}

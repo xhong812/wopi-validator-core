@@ -1,0 +1,32 @@
+﻿{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "title": "Full WOPI PutRelativeFile JSON Schema",
+  "description": "A WOPI PutRelativeFile JSON response",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "Name": {
+      "type": "string",
+      "default": "",
+      "optional": false
+    },
+    "Url": {
+      "type": "string",
+      "format": "uri",
+      "default": "",
+      "optional": false
+    },
+    "HostEditUrl": {
+      "type": "string",
+      "format": "uri",
+      "default": "",
+      "optional": false
+    },
+    "HostViewUrl": {
+      "type": "string",
+      "format": "uri",
+      "default": "",
+      "optional": false
+    }
+  }
+}

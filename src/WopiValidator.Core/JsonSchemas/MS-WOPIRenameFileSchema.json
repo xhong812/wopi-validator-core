@@ -1,0 +1,14 @@
+﻿{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "title": "Full WOPI RenameFile JSON Schema",
+  "description": "A WOPI RenameFile JSON response",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "Name": {
+      "type": "string",
+      "default": "",
+      "optional": false
+    }
+  }
+}

@@ -381,9 +381,10 @@
               <JsonResponseContentValidator>
                 <StringProperty Name="Name" EndsWith=".wopitestx" IsRequired="true"/>
                 <AbsoluteUrlProperty Name="Url" IsRequired="true" MustIncludeAccessToken="true"/>
-                <AbsoluteUrlProperty Name="HostViewUrl" IsRequired="false"/>
-                <AbsoluteUrlProperty Name="HostEditUrl" IsRequired="false"/>
+                <AbsoluteUrlProperty Name="HostViewUrl" IsRequired="true"/>
+                <AbsoluteUrlProperty Name="HostEditUrl" IsRequired="true"/>
               </JsonResponseContentValidator>
+              <JsonSchemaValidator Schema="MS-WOPIPutRelativeFileSchema" />
               <ResponseHeaderValidator Header="X-WOPI-ServerVersion" IsRequired="true" />
               <ResponseHeaderValidator Header="X-WOPI-MachineName" IsRequired="true" />
             </Validators>
@@ -1446,7 +1447,7 @@
       </TestCase>
     </TestCases>
   </TestGroup>
-
+  
   <TestGroup Name="RenameFile">
     <PrereqTests>
       <PrereqTest>FileEditingPrereq</PrereqTest>
@@ -1486,6 +1487,7 @@
               <JsonResponseContentValidator>
                 <StringProperty Name="Name" ExpectedValue="ValidatorTestFileRenamed" IsRequired="true" />
               </JsonResponseContentValidator>
+              <JsonSchemaValidator Schema="MS-WOPIRenameFileSchema" />
               <ResponseHeaderValidator Header="X-WOPI-ServerVersion" IsRequired="true" />
               <ResponseHeaderValidator Header="X-WOPI-MachineName" IsRequired="true" />
             </Validators>
@@ -1542,13 +1544,13 @@
           Tests that host returns 404 status code for unknown file.
         </Description>
         <Requests>
-          <PutRelativeFile PutRelativeFileMode="ExactName" Name="ValidatorTestFile.docx" ResourceId="WordSimpleDocument">
+          <PutRelativeFile PutRelativeFileMode="ExactName" Name="ValidatorTestUnknownFile.docx" ResourceId="WordSimpleDocument">
             <SaveState>
               <State Name="NewFileUrl" Source="Url" />
             </SaveState>
             <Validators>
               <JsonResponseContentValidator>
-                <StringProperty Name="Name" ExpectedValue="ValidatorTestFile.docx" IsRequired="true"/>
+                <StringProperty Name="Name" ExpectedValue="ValidatorTestUnknownFile.docx" IsRequired="true"/>
               </JsonResponseContentValidator>
             </Validators>
           </PutRelativeFile>
@@ -1575,16 +1577,16 @@
 
       <TestCase Name="RenameFileWithInvalidAccessToken" Document="WordBlankDocument" Category="WopiCore">
         <Description>
-          Tests that host returns 401 or 403 status code for RenameFile request with invalid access token.
+          Tests that host returns 401 or 404 status code for RenameFile request with invalid access token.
         </Description>
         <Requests>
-          <PutRelativeFile PutRelativeFileMode="ExactName" Name="ValidatorTestFile.docx" ResourceId="WordSimpleDocument">
+          <PutRelativeFile PutRelativeFileMode="ExactName" Name="ValidatorTestFileWithInvalidAccessToken.docx" ResourceId="WordSimpleDocument">
             <SaveState>
               <State Name="NewFileUrl" Source="Url" />
             </SaveState>
             <Validators>
               <JsonResponseContentValidator>
-                <StringProperty Name="Name" ExpectedValue="ValidatorTestFile.docx" IsRequired="true"/>
+                <StringProperty Name="Name" ExpectedValue="ValidatorTestFileWithInvalidAccessToken.docx" IsRequired="true"/>
               </JsonResponseContentValidator>
             </Validators>
           </PutRelativeFile>
@@ -1604,7 +1606,7 @@
             <Validators>
               <Or>
                 <ResponseCodeValidator ExpectedCode="401" />
-                <ResponseCodeValidator ExpectedCode="403" />
+                <ResponseCodeValidator ExpectedCode="404" />
               </Or>
             </Validators>
           </RenameFile>

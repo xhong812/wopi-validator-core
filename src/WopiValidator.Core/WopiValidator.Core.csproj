@@ -28,7 +28,6 @@
   <ItemGroup>
     <EmbeddedResource Include="JsonSchemas\CheckFileInfoSchema.json" />
     <EmbeddedResource Include="JsonSchemas\MS-WOPIEnumerateChildrenSchema.json" />
-    <EmbeddedResource Include="JsonSchemas\MS-WOPIGetShareUrlSchema.json" />
     <EmbeddedResource Include="JsonSchemas\MS-WOPIRenameFileSchema.json" />
     <EmbeddedResource Include="JsonSchemas\MS-WOPICheckFileInfoSchema.json" />
     <EmbeddedResource Include="JsonSchemas\MS-WOPIPutRelativeFileSchema.json" />

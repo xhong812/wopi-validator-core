@@ -399,9 +399,6 @@ namespace Microsoft.Office.WopiValidator.Core
 		embededit,
 
 		/// <remarks/>
-		mobileclient,
-
-		/// <remarks/>
 		present,
 
 		/// <remarks/>

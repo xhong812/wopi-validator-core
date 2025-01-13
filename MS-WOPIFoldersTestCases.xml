@@ -38,6 +38,7 @@
                 <AbsoluteUrlProperty Name="Children[0].Url" IsRequired="true" MustIncludeAccessToken="true" />
                 <StringProperty Name="Children[0].Version" IsRequired="true" />
               </JsonResponseContentValidator>
+              <JsonSchemaValidator Schema="MS-WOPIEnumerateChildrenSchema" />
               <ResponseHeaderValidator Header="X-WOPI-ServerVersion" IsRequired="true" />
               <ResponseHeaderValidator Header="X-WOPI-MachineName" IsRequired="true" />
             </Validators>

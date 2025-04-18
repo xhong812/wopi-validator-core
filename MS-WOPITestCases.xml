@@ -11,7 +11,7 @@
     <File Id="ZeroByteFile" Name="ZeroByteFile.wopitest" FilePath="Resources\ZeroByteFile.wopitest" />
   </Resources>
 
-  <PrereqCases>
+  <PrereqCases>    
     <TestCase Name="UserCanWritePrereq" Document="WordBlankDocument" Category="WopiCore">
       <Description>
         Prereq WOPI Validation test to check if the user has permission to perform Write operation.
@@ -1672,6 +1672,43 @@
           <Unlock Lock="LockString"  OverrideUrl="$State:NewFileUrlForRename" />
           <DeleteFile OverrideUrl="$State:NewFileUrl" />
           <DeleteFile OverrideUrl="$State:NewFileUrlForRename" />
+        </CleanupRequests>
+      </TestCase>
+      
+      <TestCase Name="LockMismatchOnRenameFileRequest" Document="WordBlankDocument" Category="WopiCore">
+        <Description>
+          This tests that lock mismatch when RenameFile with incorrect lock id.
+        </Description>
+        <Requests>
+          <PutRelativeFile PutRelativeFileMode="ExactName" Name="ValidatorLockedTestFile.docx" ResourceId="WordBlankDocument">
+            <SaveState>
+              <State Name="NewFileUrl" Source="Url" />
+            </SaveState>
+            <Validators>
+              <JsonResponseContentValidator>
+                <StringProperty Name="Name" ExpectedValue="ValidatorLockedTestFile.docx" IsRequired="true"/>
+              </JsonResponseContentValidator>
+            </Validators>
+          </PutRelativeFile>
+          <CheckFileInfo OverrideUrl="$State:NewFileUrl">
+            <Validators>
+              <ResponseCodeValidator ExpectedCode="200" />
+              <JsonResponseContentValidator>
+                <BooleanProperty Name="SupportsRename" ExpectedValue="true" IsRequired="true" />
+                <BooleanProperty Name="UserCanRename" ExpectedValue="true" IsRequired="true" />
+              </JsonResponseContentValidator>
+            </Validators>
+          </CheckFileInfo>
+	        <Lock Lock="LockString" OverrideUrl="$State:NewFileUrl" />
+          <RenameFile OverrideUrl="$State:NewFileUrl" Lock="IncorrectLockString" Name="ValdatorTestFileRenamed">
+            <Validators>
+                <ResponseCodeValidator ExpectedCode="409" />
+            </Validators>
+          </RenameFile>
+        </Requests>
+        <CleanupRequests>
+	        <Unlock Lock="LockString" OverrideUrl="$State:NewFileUrl" />
+          <DeleteFile OverrideUrl="$State:NewFileUrl" />
         </CleanupRequests>
       </TestCase>
     </TestCases>

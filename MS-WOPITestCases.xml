@@ -11,7 +11,7 @@
     <File Id="ZeroByteFile" Name="ZeroByteFile.wopitest" FilePath="Resources\ZeroByteFile.wopitest" />
   </Resources>
 
-  <PrereqCases>    
+  <PrereqCases>
     <TestCase Name="UserCanWritePrereq" Document="WordBlankDocument" Category="WopiCore">
       <Description>
         Prereq WOPI Validation test to check if the user has permission to perform Write operation.

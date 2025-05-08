@@ -12,6 +12,36 @@
   </Resources>
 
   <PrereqCases>
+    <TestCase Name="AddActivitiesPrereq" Category="WopiCore">
+      <Description>
+        The host must support /files/AddActivities.
+      </Description>
+      <Requests>
+        <CheckFileInfo>
+          <Validators>
+            <JsonResponseContentValidator>
+              <BooleanProperty Name="SupportsAddActivities" ExpectedValue="true" IsRequired="true" />
+            </JsonResponseContentValidator>
+          </Validators>
+        </CheckFileInfo>
+      </Requests>
+    </TestCase>
+
+    <TestCase Name="WopiValidatorPrereq" Category="WopiCore">
+      <Description>
+        The prereq WOPI validation that must pass prior to running the (potentially destructive) test suite.
+      </Description>
+      <Requests>
+        <CheckFileInfo>
+          <Validators>
+            <JsonResponseContentValidator>
+              <StringProperty Name="BaseFileName" EndsWith=".wopitest" IsRequired="true" IgnoreCase="true" />
+            </JsonResponseContentValidator>
+          </Validators>
+        </CheckFileInfo>
+      </Requests>
+    </TestCase>
+
     <TestCase Name="UserCanWritePrereq" Document="WordBlankDocument" Category="WopiCore">
       <Description>
         Prereq WOPI Validation test to check if the user has permission to perform Write operation.
@@ -239,6 +269,704 @@
     </TestCase>
   </PrereqCases>
 
+  <TestGroup Name="AddActivities">
+    <PrereqTests>
+      <PrereqTest>WopiValidatorPrereq</PrereqTest>
+      <PrereqTest>FileEditingPrereq</PrereqTest>
+      <PrereqTest>AddActivitiesPrereq</PrereqTest>
+    </PrereqTests>
+    <TestCases>
+      <!-- /files/AddActivities -->
+      <TestCase Name="files.AddActivitiesSingleMinimalComment" Category="WopiCore">
+        <Description>one comment, minimal properties</Description>
+        <Requests>
+          <AddActivities>
+            <RequestBody>
+              <![CDATA[{ "Activities": [
+              {
+                "Type": "comment",
+                "Id": "00000014-0000-0000-0000-000000000000",
+                "Timestamp": "2017-03-15T13:47:13000000Z",
+                "Data": {
+                  "ContentId": "cid123",
+                  "ContentAction": "created"
+                }
+              }
+              ] }]]>
+            </RequestBody>
+            <Validators>
+              <JsonResponseContentValidator>
+                <StringProperty Name="ActivityResponses[0].Id" IsRequired="true" ExpectedValue="00000014-0000-0000-0000-000000000000" />
+              </JsonResponseContentValidator>
+              <Or>
+                <JsonResponseContentValidator>
+                  <IntegerProperty Name="ActivityResponses[0].Status" ExpectedValue="0"/>
+                </JsonResponseContentValidator>
+                <JsonResponseContentValidator>
+                  <IntegerProperty Name="ActivityResponses[0].Status" ExpectedValue="3" />
+                </JsonResponseContentValidator>
+              </Or>
+            </Validators>
+          </AddActivities>
+        </Requests>
+      </TestCase>
+
+      <TestCase Name="files.AddActivitiesSingleFullComment" Category="WopiCore">
+        <Description>one comment with all data properties set</Description>
+        <Requests>
+          <AddActivities>
+            <RequestBody>
+              <![CDATA[{ "Activities": [
+              {
+                "Type": "comment",
+                "Id": "00000001-0000-0000-0000-000000000000",
+                "Created": "2017-02-15T13:47:13000000Z",
+                "Data": {
+                  "CommentText": "basic text",
+                  "ContentId": "cid123",
+                  "NavigationId": "nid123",
+                  "ContentAction": "created",
+                  "IsReply": true
+                }
+              }
+              ] }]]>
+            </RequestBody>
+            <Validators>
+              <JsonResponseContentValidator>
+                <StringProperty Name="ActivityResponses[0].Id" IsRequired="true" ExpectedValue="00000001-0000-0000-0000-000000000000" />
+              </JsonResponseContentValidator>
+              <Or>
+                <JsonResponseContentValidator>
+                  <IntegerProperty Name="ActivityResponses[0].Status" ExpectedValue="0"/>
+                </JsonResponseContentValidator>
+                <JsonResponseContentValidator>
+                  <IntegerProperty Name="ActivityResponses[0].Status" ExpectedValue="3" />
+                </JsonResponseContentValidator>
+              </Or>
+            </Validators>
+          </AddActivities>
+        </Requests>
+      </TestCase>
+
+      <TestCase Name="files.AddActivitiesAllCapsID" Category="WopiCore">
+        <Description>one comment with all-caps ID GUID</Description>
+        <Requests>
+          <AddActivities>
+            <RequestBody>
+              <![CDATA[{ "Activities": [
+              {
+                "Type": "comment",
+                "Id": "00000002-ABCD-ABCD-ABCD-ABCDEFABCDEF",
+                "Created": "2017-02-15T13:47:13000000Z",
+                "Data": {
+                  "ContentId": "cid123",
+                  "ContentAction": "created"
+                }
+              }
+              ] }]]>
+            </RequestBody>
+            <Validators>
+              <JsonResponseContentValidator>
+                <StringProperty Name="ActivityResponses[0].Id" IsRequired="true" ExpectedValue="00000002-ABCD-ABCD-ABCD-ABCDEFABCDEF" />
+              </JsonResponseContentValidator>
+              <Or>
+                <JsonResponseContentValidator>
+                  <IntegerProperty Name="ActivityResponses[0].Status" ExpectedValue="0"/>
+                </JsonResponseContentValidator>
+                <JsonResponseContentValidator>
+                  <IntegerProperty Name="ActivityResponses[0].Status" ExpectedValue="3" />
+                </JsonResponseContentValidator>
+              </Or>
+            </Validators>
+          </AddActivities>
+        </Requests>
+      </TestCase>
+
+      <TestCase Name="files.AddActivitiesMaxLengthContentID" Category="WopiCore">
+        <Description>one comment with max-length ContentID</Description>
+        <Requests>
+          <AddActivities>
+            <RequestBody>
+              <![CDATA[{ "Activities": [
+              {
+                "Type": "comment",
+                "Id": "00000004-0000-0000-0000-000000000000",
+                "Created": "2017-02-15T13:47:13000000Z",
+                "Data": {
+                  "ContentId": "0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef",
+                  "ContentAction": "created"
+                }
+              }
+              ] }]]>
+            </RequestBody>
+            <Validators>
+              <JsonResponseContentValidator>
+                <StringProperty Name="ActivityResponses[0].Id" IsRequired="true" ExpectedValue="00000004-0000-0000-0000-000000000000" />
+              </JsonResponseContentValidator>
+              <Or>
+                <JsonResponseContentValidator>
+                  <IntegerProperty Name="ActivityResponses[0].Status" ExpectedValue="0"/>
+                </JsonResponseContentValidator>
+                <JsonResponseContentValidator>
+                  <IntegerProperty Name="ActivityResponses[0].Status" ExpectedValue="3" />
+                </JsonResponseContentValidator>
+              </Or>
+            </Validators>
+          </AddActivities>
+        </Requests>
+      </TestCase>
+
+      <TestCase Name="files.AddActivitiesMaxLengthNavigationId" Category="WopiCore">
+        <Description>one comment with max-length NavigationId</Description>
+        <Requests>
+          <AddActivities>
+            <RequestBody>
+              <![CDATA[{ "Activities": [
+              {
+                "Type": "comment",
+                "Id": "00000005-0000-0000-0000-000000000000",
+                "Created": "2017-02-15T13:47:13000000Z",
+                "Data": {
+                  "ContentId": "cid123",
+                  "NavigationId": "0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef",
+                  "ContentAction": "created"
+                }
+              }
+              ] }]]>
+            </RequestBody>
+            <Validators>
+              <JsonResponseContentValidator>
+                <StringProperty Name="ActivityResponses[0].Id" IsRequired="true" ExpectedValue="00000005-0000-0000-0000-000000000000" />
+              </JsonResponseContentValidator>
+              <Or>
+                <JsonResponseContentValidator>
+                  <IntegerProperty Name="ActivityResponses[0].Status" ExpectedValue="0"/>
+                </JsonResponseContentValidator>
+                <JsonResponseContentValidator>
+                  <IntegerProperty Name="ActivityResponses[0].Status" ExpectedValue="3" />
+                </JsonResponseContentValidator>
+              </Or>
+            </Validators>
+          </AddActivities>
+        </Requests>
+      </TestCase>
+
+      <TestCase Name="files.AddActivitiesCommentUpdate" Category="WopiCore">
+        <Description>one comment with ContentAction=update</Description>
+        <Requests>
+          <AddActivities>
+            <RequestBody>
+              <![CDATA[{ "Activities": [
+              {
+                "Type": "comment",
+                "Id": "00000006-0000-0000-0000-000000000000",
+                "Created": "2017-02-15T13:47:13000000Z",
+                "Data": {
+                  "ContentId": "cid123",
+                  "ContentAction": "updated"
+                }
+              }
+              ] }]]>
+            </RequestBody>
+            <Validators>
+              <JsonResponseContentValidator>
+                <StringProperty Name="ActivityResponses[0].Id" IsRequired="true" ExpectedValue="00000006-0000-0000-0000-000000000000" />
+              </JsonResponseContentValidator>
+              <Or>
+                <JsonResponseContentValidator>
+                  <IntegerProperty Name="ActivityResponses[0].Status" ExpectedValue="0"/>
+                </JsonResponseContentValidator>
+                <JsonResponseContentValidator>
+                  <IntegerProperty Name="ActivityResponses[0].Status" ExpectedValue="3" />
+                </JsonResponseContentValidator>
+              </Or>
+            </Validators>
+          </AddActivities>
+        </Requests>
+      </TestCase>
+
+      <TestCase Name="files.AddActivitiesCommentDelete" Category="WopiCore">
+        <Description>one comment with ContentAction=delete</Description>
+        <Requests>
+          <AddActivities>
+            <RequestBody>
+              <![CDATA[{ "Activities": [
+              {
+                "Type": "comment",
+                "Id": "00000007-0000-0000-0000-000000000000",
+                "Created": "2017-02-15T13:47:13000000Z",
+                "Data": {
+                  "ContentId": "cid123",
+                  "ContentAction": "deleted"
+                }
+              }
+              ] }]]>
+            </RequestBody>
+            <Validators>
+              <JsonResponseContentValidator>
+                <StringProperty Name="ActivityResponses[0].Id" IsRequired="true" ExpectedValue="00000007-0000-0000-0000-000000000000" />
+              </JsonResponseContentValidator>
+              <Or>
+                <JsonResponseContentValidator>
+                  <IntegerProperty Name="ActivityResponses[0].Status" ExpectedValue="0"/>
+                </JsonResponseContentValidator>
+                <JsonResponseContentValidator>
+                  <IntegerProperty Name="ActivityResponses[0].Status" ExpectedValue="3" />
+                </JsonResponseContentValidator>
+              </Or>
+            </Validators>
+          </AddActivities>
+        </Requests>
+      </TestCase>
+
+      <TestCase Name="files.AddActivitiesWithBonusToplevelProperty" Category="WopiCore">
+        <Description>one comment with bogus additional toplevel property</Description>
+        <Requests>
+          <AddActivities>
+            <RequestBody>
+              <![CDATA[{ "Activities": [
+              {
+                "Type": "comment",
+                "Id": "00000008-0000-0000-0000-000000000000",
+                "Created": "2017-02-15T13:47:13000000Z",
+                "Data": {
+                  "ContentId": "cid123",
+                  "ContentAction": "created"
+                },
+                "BonusTopLevelProperty": "future compatibility!"
+              }
+              ] }]]>
+            </RequestBody>
+            <Validators>
+              <JsonResponseContentValidator>
+                <StringProperty Name="ActivityResponses[0].Id" IsRequired="true" ExpectedValue="00000008-0000-0000-0000-000000000000" />
+              </JsonResponseContentValidator>
+              <Or>
+                <JsonResponseContentValidator>
+                  <IntegerProperty Name="ActivityResponses[0].Status" ExpectedValue="0"/>
+                </JsonResponseContentValidator>
+                <JsonResponseContentValidator>
+                  <IntegerProperty Name="ActivityResponses[0].Status" ExpectedValue="3" />
+                </JsonResponseContentValidator>
+              </Or>
+            </Validators>
+          </AddActivities>
+        </Requests>
+      </TestCase>
+
+      <TestCase Name="files.AddActivitiesWithBonusDataProperty" Category="WopiCore">
+        <Description>one comment with bogus additional data property</Description>
+        <Requests>
+          <AddActivities>
+            <RequestBody>
+              <![CDATA[{ "Activities": [
+              {
+                "Type": "comment",
+                "Id": "00000003-0000-0000-0000-000000000000",
+                "Created": "2017-02-15T13:47:13000000Z",
+                "Data": {
+                  "ContentId": "cid123",
+                  "ContentAction": "created",
+                  "BonusProperty": "future compatibility!"
+                }
+              }
+              ] }]]>
+            </RequestBody>
+            <Validators>
+              <JsonResponseContentValidator>
+                <StringProperty Name="ActivityResponses[0].Id" IsRequired="true" ExpectedValue="00000003-0000-0000-0000-000000000000" />
+              </JsonResponseContentValidator>
+              <Or>
+                <JsonResponseContentValidator>
+                  <IntegerProperty Name="ActivityResponses[0].Status" ExpectedValue="0"/>
+                </JsonResponseContentValidator>
+                <JsonResponseContentValidator>
+                  <IntegerProperty Name="ActivityResponses[0].Status" ExpectedValue="3" />
+                </JsonResponseContentValidator>
+              </Or>
+            </Validators>
+          </AddActivities>
+        </Requests>
+      </TestCase>
+
+      <TestCase Name="files.AddActivitiesCommentAndPerson" Category="WopiCore">
+        <Description>one comment, one person</Description>
+        <Requests>
+          <AddActivities>
+            <RequestBody>
+              <![CDATA[{ "Activities": [
+              {
+                "Type": "comment",
+                "Id": "00000009-0000-0000-0000-000000000000",
+                "Created": "2017-02-15T13:47:13000000Z",
+                "Data": {
+                  "ContentId": "cid123",
+                  "ContentAction": "created"
+                },
+                "People": [
+                  {
+                    "Name": "John Able",
+                    "Id": "111",
+                    "Provider": "wopi-contoso",
+                    "Mentioned": true
+                  }
+                ]
+              }
+              ] }]]>
+            </RequestBody>
+            <Validators>
+              <JsonResponseContentValidator>
+                <StringProperty Name="ActivityResponses[0].Id" IsRequired="true" ExpectedValue="00000009-0000-0000-0000-000000000000" />
+              </JsonResponseContentValidator>
+              <Or>
+                <JsonResponseContentValidator>
+                  <IntegerProperty Name="ActivityResponses[0].Status" ExpectedValue="0"/>
+                </JsonResponseContentValidator>
+                <JsonResponseContentValidator>
+                  <IntegerProperty Name="ActivityResponses[0].Status" ExpectedValue="3" />
+                </JsonResponseContentValidator>
+              </Or>
+            </Validators>
+          </AddActivities>
+        </Requests>
+      </TestCase>
+
+      <TestCase Name="files.AddActivitiesCommentWithThreePeople" Category="WopiCore">
+        <Description>one comment, three people</Description>
+        <Requests>
+          <AddActivities>
+            <RequestBody>
+              <![CDATA[{ "Activities": [
+              {
+                "Type": "comment",
+                "Id": "0000000a-0000-0000-0000-000000000000",
+                "Created": "2017-02-15T13:47:13000000Z",
+                "Data": {
+                  "ContentId": "cid123",
+                  "ContentAction": "created"
+                },
+                "People": [
+                  {
+                    "Name": "John Able",
+                    "Id": "111",
+                    "Provider": "wopi-contoso",
+                    "Mentioned": true
+                  },
+                  {
+                    "Name": "Jane Baker",
+                    "Id": "222",
+                    "Provider": "wopi-contoso",
+                    "InThread": true
+                  },
+                  {
+                    "Name": "Pat Charlie",
+                    "Id": "333",
+                    "Provider": "wopi-contoso",
+                    "InThread": true,
+                    "RepliedTo": true
+                  }
+                ]
+              }
+              ] }]]>
+            </RequestBody>
+            <Validators>
+              <JsonResponseContentValidator>
+                <StringProperty Name="ActivityResponses[0].Id" IsRequired="true" ExpectedValue="0000000a-0000-0000-0000-000000000000" />
+              </JsonResponseContentValidator>
+              <Or>
+                <JsonResponseContentValidator>
+                  <IntegerProperty Name="ActivityResponses[0].Status" ExpectedValue="0"/>
+                </JsonResponseContentValidator>
+                <JsonResponseContentValidator>
+                  <IntegerProperty Name="ActivityResponses[0].Status" ExpectedValue="3" />
+                </JsonResponseContentValidator>
+              </Or>
+            </Validators>
+          </AddActivities>
+        </Requests>
+      </TestCase>
+
+      <TestCase Name="files.AddActivitiesCommentWithPersonBonusProperty" Category="WopiCore">
+        <Description>one comment, one person with bogus additional property</Description>
+        <Requests>
+          <AddActivities>
+            <RequestBody>
+              <![CDATA[{ "Activities": [
+              {
+                "Type": "comment",
+                "Id": "0000000b-0000-0000-0000-000000000000",
+                "Created": "2017-02-15T13:47:13000000Z",
+                "Data": {
+                  "ContentId": "cid123",
+                  "ContentAction": "created"
+                },
+                "People": [
+                  {
+                    "Name": "John Able",
+                    "Id": "111",
+                    "Provider": "wopi-contoso",
+                    "Mentioned": true,
+                    "BonusProperty": "future compatibility!"
+                  }
+                ]
+              }
+              ] }]]>
+            </RequestBody>
+            <Validators>
+              <JsonResponseContentValidator>
+                <StringProperty Name="ActivityResponses[0].Id" IsRequired="true" ExpectedValue="0000000b-0000-0000-0000-000000000000" />
+              </JsonResponseContentValidator>
+              <Or>
+                <JsonResponseContentValidator>
+                  <IntegerProperty Name="ActivityResponses[0].Status" ExpectedValue="0"/>
+                </JsonResponseContentValidator>
+                <JsonResponseContentValidator>
+                  <IntegerProperty Name="ActivityResponses[0].Status" ExpectedValue="3" />
+                </JsonResponseContentValidator>
+              </Or>
+            </Validators>
+          </AddActivities>
+        </Requests>
+      </TestCase>
+
+      <TestCase Name="files.AddActivitiesCommentWithNonWopiPerson" Category="WopiCore">
+        <Description>one comment, one person with non-wopi provider and ID</Description>
+        <Requests>
+          <AddActivities>
+            <RequestBody>
+              <![CDATA[{ "Activities": [
+              {
+                "Type": "comment",
+                "Id": "0000000c-0000-0000-0000-000000000000",
+                "Created": "2017-02-15T13:47:13000000Z",
+                "Data": {
+                  "ContentId": "cid123",
+                  "ContentAction": "created"
+                },
+                "People": [
+                  {
+                    "Name": "Don Delta",
+                    "Id": "{00000000-0000-0000-0000-000000000000}",
+                    "Provider": "Windows Live",
+                    "Mentioned": true
+                  }
+                ]
+              }
+              ] }]]>
+            </RequestBody>
+            <Validators>
+              <JsonResponseContentValidator>
+                <StringProperty Name="ActivityResponses[0].Id" IsRequired="true" ExpectedValue="0000000c-0000-0000-0000-000000000000" />
+              </JsonResponseContentValidator>
+              <Or>
+                <JsonResponseContentValidator>
+                  <IntegerProperty Name="ActivityResponses[0].Status" ExpectedValue="0"/>
+                </JsonResponseContentValidator>
+                <JsonResponseContentValidator>
+                  <IntegerProperty Name="ActivityResponses[0].Status" ExpectedValue="3" />
+                </JsonResponseContentValidator>
+              </Or>
+            </Validators>
+          </AddActivities>
+        </Requests>
+      </TestCase>
+
+      <TestCase Name="files.AddActivitiesUnknownActivityType" Category="WopiCore">
+        <Description>one activity with bogus type</Description>
+        <Requests>
+          <AddActivities>
+            <RequestBody>
+              <![CDATA[{ "Activities": [
+              {
+                "Type": "unsupported",
+                "Id": "0000000d-0000-0000-0000-000000000000",
+                "Created": "2017-02-15T13:47:13000000Z",
+                "Data": {
+                  "ContentId": "cid123",
+                  "ContentAction": "created"
+                }
+              }
+              ] }]]>
+            </RequestBody>
+            <Validators>
+              <JsonResponseContentValidator>
+                <StringProperty Name="ActivityResponses[0].Id" IsRequired="true" ExpectedValue="0000000d-0000-0000-0000-000000000000" />
+              </JsonResponseContentValidator>
+              <Or>
+                <JsonResponseContentValidator>
+                  <IntegerProperty Name="ActivityResponses[0].Status" ExpectedValue="0"/>
+                </JsonResponseContentValidator>
+                <JsonResponseContentValidator>
+                  <IntegerProperty Name="ActivityResponses[0].Status" ExpectedValue="3" />
+                </JsonResponseContentValidator>
+              </Or>
+            </Validators>
+          </AddActivities>
+        </Requests>
+      </TestCase>
+
+      <TestCase Name="files.AddActivitiesUnknownNoDataActivity" Category="WopiCore">
+        <Description>one activity with bogus type and no data</Description>
+        <Requests>
+          <AddActivities>
+            <RequestBody>
+              <![CDATA[{ "Activities": [
+              {
+                "Type": "unsupported",
+                "Id": "0000000e-0000-0000-0000-000000000000",
+                "Created": "2017-02-15T13:47:13000000Z"
+              }
+              ] }]]>
+            </RequestBody>
+            <Validators>
+              <JsonResponseContentValidator>
+                <StringProperty Name="ActivityResponses[0].Id" IsRequired="true" ExpectedValue="0000000e-0000-0000-0000-000000000000" />
+              </JsonResponseContentValidator>
+              <Or>
+                <JsonResponseContentValidator>
+                  <IntegerProperty Name="ActivityResponses[0].Status" ExpectedValue="0"/>
+                </JsonResponseContentValidator>
+                <JsonResponseContentValidator>
+                  <IntegerProperty Name="ActivityResponses[0].Status" ExpectedValue="3" />
+                </JsonResponseContentValidator>
+              </Or>
+            </Validators>
+          </AddActivities>
+        </Requests>
+      </TestCase>
+
+      <TestCase Name="files.AddActivitiesTwoActivitiesOneUnknown" Category="WopiCore">
+        <Description>one comment and one activity with bogus type</Description>
+        <Requests>
+          <AddActivities>
+            <RequestBody>
+              <![CDATA[{ "Activities": [
+              {
+                "Type": "comment",
+                "Id": "0000000f-0000-0000-0000-000000000000",
+                "Created": "2017-02-15T13:47:13000000Z",
+                "Data": {
+                  "ContentId": "cid123",
+                  "ContentAction": "created"
+                }
+              },
+              {
+                "Type": "unsupported",
+                "Id": "00000010-0000-0000-0000-000000000000",
+                "Created": "2017-02-15T13:47:13000000Z",
+                "Data": {
+                  "ContentId": "cid123",
+                  "ContentAction": "created"
+                }
+              }
+              ] }]]>
+            </RequestBody>
+            <Validators>
+              <Or>
+                <!-- We don't know what order they'll come back in so we need to OR and check both ways -->
+                <JsonResponseContentValidator>
+                  <StringProperty Name="ActivityResponses[0].Id" IsRequired="true" ExpectedValue="0000000f-0000-0000-0000-000000000000" />
+                  <StringProperty Name="ActivityResponses[1].Id" IsRequired="true" ExpectedValue="00000010-0000-0000-0000-000000000000" />
+                </JsonResponseContentValidator>
+                <JsonResponseContentValidator>
+                  <StringProperty Name="ActivityResponses[0].Id" IsRequired="true" ExpectedValue="00000010-0000-0000-0000-000000000000" />
+                  <StringProperty Name="ActivityResponses[1].Id" IsRequired="true" ExpectedValue="0000000f-0000-0000-0000-000000000000" />
+                </JsonResponseContentValidator>
+              </Or>
+              <Or>
+                <JsonResponseContentValidator>
+                  <IntegerProperty Name="ActivityResponses[0].Status" ExpectedValue="0"/>
+                </JsonResponseContentValidator>
+                <JsonResponseContentValidator>
+                  <IntegerProperty Name="ActivityResponses[0].Status" ExpectedValue="3" />
+                </JsonResponseContentValidator>
+              </Or>
+              <Or>
+                <JsonResponseContentValidator>
+                  <IntegerProperty Name="ActivityResponses[1].Status" ExpectedValue="0"/>
+                </JsonResponseContentValidator>
+                <JsonResponseContentValidator>
+                  <IntegerProperty Name="ActivityResponses[1].Status" ExpectedValue="3" />
+                </JsonResponseContentValidator>
+              </Or>
+            </Validators>
+          </AddActivities>
+        </Requests>
+      </TestCase>
+
+      <TestCase Name="files.AddActivitiesThreeComments" Category="WopiCore">
+        <Description>three comments</Description>
+        <Requests>
+          <AddActivities>
+            <RequestBody>
+              <![CDATA[{ "Activities": [
+              {
+                "Type": "comment",
+                "Id": "00000011-0000-0000-0000-000000000000",
+                "Created": "2017-02-15T13:47:13000000Z",
+                "Data": {
+                  "ContentId": "cid123",
+                  "ContentAction": "created"
+                }
+              },
+              {
+                "Type": "comment",
+                "Id": "00000012-0000-0000-0000-000000000000",
+                "Created": "2017-02-15T13:47:13000000Z",
+                "Data": {
+                  "ContentId": "cid123",
+                  "ContentAction": "created"
+                }
+              },
+              {
+                "Type": "comment",
+                "Id": "00000013-0000-0000-0000-000000000000",
+                "Created": "2017-02-15T13:47:13000000Z",
+                "Data": {
+                  "ContentId": "cid123",
+                  "ContentAction": "created"
+                }
+              }
+              ] }]]>
+            </RequestBody>
+            <Validators>
+              <!-- We don't know what order they'll come back in and checking each possibility is too much so we'll just make sure that we got three replies -->
+              <JsonResponseContentValidator>
+                <StringProperty Name="ActivityResponses[0].Id" IsRequired="true" />
+                <StringProperty Name="ActivityResponses[1].Id" IsRequired="true" />
+                <StringProperty Name="ActivityResponses[2].Id" IsRequired="true" />
+              </JsonResponseContentValidator>
+              <Or>
+                <JsonResponseContentValidator>
+                  <IntegerProperty Name="ActivityResponses[0].Status" ExpectedValue="0"/>
+                </JsonResponseContentValidator>
+                <JsonResponseContentValidator>
+                  <IntegerProperty Name="ActivityResponses[0].Status" ExpectedValue="3" />
+                </JsonResponseContentValidator>
+              </Or>
+              <Or>
+                <JsonResponseContentValidator>
+                  <IntegerProperty Name="ActivityResponses[1].Status" ExpectedValue="0"/>
+                </JsonResponseContentValidator>
+                <JsonResponseContentValidator>
+                  <IntegerProperty Name="ActivityResponses[1].Status" ExpectedValue="3" />
+                </JsonResponseContentValidator>
+              </Or>
+              <Or>
+                <JsonResponseContentValidator>
+                  <IntegerProperty Name="ActivityResponses[2].Status" ExpectedValue="0"/>
+                </JsonResponseContentValidator>
+                <JsonResponseContentValidator>
+                  <IntegerProperty Name="ActivityResponses[2].Status" ExpectedValue="3" />
+                </JsonResponseContentValidator>
+              </Or>
+            </Validators>
+          </AddActivities>
+        </Requests>
+      </TestCase>
+    </TestCases>
+  </TestGroup>
+  
   <TestGroup Name="CheckFileInfo">
     <TestCases>
       <TestCase Name="FullCheckFileInfoSchema" Document="WordBlankDocument" Category="WopiCore">
@@ -1672,6 +2400,43 @@
           <Unlock Lock="LockString"  OverrideUrl="$State:NewFileUrlForRename" />
           <DeleteFile OverrideUrl="$State:NewFileUrl" />
           <DeleteFile OverrideUrl="$State:NewFileUrlForRename" />
+        </CleanupRequests>
+      </TestCase>
+      
+      <TestCase Name="LockMismatchOnRenameFileRequest" Document="WordBlankDocument" Category="WopiCore">
+        <Description>
+          This tests that lock mismatch when RenameFile with incorrect lock id.
+        </Description>
+        <Requests>
+          <PutRelativeFile PutRelativeFileMode="ExactName" Name="ValidatorLockedTestFile.docx" ResourceId="WordBlankDocument">
+            <SaveState>
+              <State Name="NewFileUrl" Source="Url" />
+            </SaveState>
+            <Validators>
+              <JsonResponseContentValidator>
+                <StringProperty Name="Name" ExpectedValue="ValidatorLockedTestFile.docx" IsRequired="true"/>
+              </JsonResponseContentValidator>
+            </Validators>
+          </PutRelativeFile>
+          <CheckFileInfo OverrideUrl="$State:NewFileUrl">
+            <Validators>
+              <ResponseCodeValidator ExpectedCode="200" />
+              <JsonResponseContentValidator>
+                <BooleanProperty Name="SupportsRename" ExpectedValue="true" IsRequired="true" />
+                <BooleanProperty Name="UserCanRename" ExpectedValue="true" IsRequired="true" />
+              </JsonResponseContentValidator>
+            </Validators>
+          </CheckFileInfo>
+	        <Lock Lock="LockString" OverrideUrl="$State:NewFileUrl" />
+          <RenameFile OverrideUrl="$State:NewFileUrl" Lock="IncorrectLockString" Name="ValdatorTestFileRenamed">
+            <Validators>
+                <ResponseCodeValidator ExpectedCode="409" />
+            </Validators>
+          </RenameFile>
+        </Requests>
+        <CleanupRequests>
+	        <Unlock Lock="LockString" OverrideUrl="$State:NewFileUrl" />
+          <DeleteFile OverrideUrl="$State:NewFileUrl" />
         </CleanupRequests>
       </TestCase>
     </TestCases>

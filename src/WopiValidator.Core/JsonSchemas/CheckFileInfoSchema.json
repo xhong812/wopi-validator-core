@@ -4,6 +4,16 @@
   "description": "A WOPI CheckFileInfo JSON response",
   "type": "object",
   "additionalProperties": false,
+  "required": [
+    "BaseFileName",
+    "OfficeCollaborationServiceEndpointUrl",
+    "OpenInClientCommandUrl",
+    "OpenInClientPostMessage",
+    "OwnerId",
+    "Size",
+    "UserPrincipalName",
+    "Version"
+  ],
   "properties": {
     "AADUserObjectId": {
       "type": "string",
@@ -62,7 +72,6 @@
     },
     "BreadcrumbBrandUrl": {
       "type": "string",
-      "format": "uri",
       "default": "",
       "optional": true
     },
@@ -73,7 +82,6 @@
     },
     "BreadcrumbDocUrl": {
       "type": "string",
-      "format": "uri",
       "default": "",
       "optional": true
     },
@@ -84,13 +92,11 @@
     },
     "BreadcrumbFolderUrl": {
       "type": "string",
-      "format": "uri",
       "default": "",
       "optional": true
     },
     "ClientUrl": {
       "type": "string",
-      "format": "uri",
       "default": "",
       "optional": true
     },
@@ -106,7 +112,6 @@
     },
     "CloseUrl": {
       "type": "string",
-      "format": "uri",
       "default": "",
       "optional": true
     },
@@ -132,13 +137,11 @@
     },
     "DownloadUrl": {
       "type": "string",
-      "format": "uri",
       "default": "",
       "optional": true
     },
     "EditAndReplyUrl": {
       "type": "string",
-      "format": "uri",
       "default": "",
       "optional": true
     },
@@ -199,13 +202,11 @@
     },
     "FileSharingUrl": {
       "type": "string",
-      "format": "uri",
       "default": "",
       "optional": true
     },
     "FileUrl": {
       "type": "string",
-      "format": "uri",
       "default": "",
       "optional": true
     },
@@ -236,19 +237,16 @@
     },
     "HostEditUrl": {
       "type": "string",
-      "format": "uri",
       "default": "",
       "optional": true
     },
     "HostEmbeddedEditUrl": {
       "type": "string",
-      "format": "uri",
       "default": "",
       "optional": true
     },
     "HostEmbeddedViewUrl": {
       "type": "string",
-      "format": "uri",
       "default": "",
       "optional": true
     },
@@ -264,13 +262,11 @@
     },
     "HostRestUrl": {
       "type": "string",
-      "format": "uri",
       "default": "",
       "optional": true
     },
     "HostViewUrl": {
       "type": "string",
-      "format": "uri",
       "default": "",
       "optional": true
     },
@@ -322,20 +318,21 @@
     "OfficeCollaborationServiceEndpointUrl": {
       "type": "string",
       "default": "",
-      "optional": true
+      "optional": false
     },
     "OpenInClientCommandUrl": {
       "type": "string",
       "default": "",
-      "optional": true
+      "optional": false
     },
     "OpenInClientPostMessage": {
       "type": "boolean",
       "default": false,
-      "optional": true
+      "optional": false
     },
     "OwnerId": {
       "type": "string",
+      "default": "",
       "optional": false
     },
     "PermissionsPostMessage": {
@@ -365,7 +362,6 @@
     },
     "PrivacyUrl": {
       "type": "string",
-      "format": "uri",
       "default": "",
       "optional": true
     },
@@ -411,13 +407,11 @@
     },
     "SignInUrl": {
       "type": "string",
-      "format": "uri",
       "default": "",
       "optional": true
     },
     "SignoutUrl": {
       "type": "string",
-      "format": "uri",
       "default": "",
       "optional": true
     },
@@ -428,6 +422,10 @@
     },
     "SupportedShareUrlTypes": {
       "type": "array",
+      "items": {
+        "type": "string",
+        "enum": ["ReadOnly","ReadWrite"]
+      },
       "default": [],
       "optional": true
     },
@@ -558,7 +556,6 @@
     },
     "TermsOfUseUrl": {
       "type": "string",
-      "format": "uri",
       "default": "",
       "optional": true
     },
@@ -620,10 +617,11 @@
     "UserPrincipalName": {
       "type": "string",
       "default": "",
-      "optional": true
+      "optional": false
     },
     "Version": {
       "type": "string",
+      "default": "",
       "optional": false
     },
     "WebEditingDisabled": {
@@ -633,7 +631,7 @@
     },
     "WorkflowPostMessage": {
       "type": "boolean",
-      "default": false,
+      "default": "",
       "optional": true
     },
     "WorkflowType": {

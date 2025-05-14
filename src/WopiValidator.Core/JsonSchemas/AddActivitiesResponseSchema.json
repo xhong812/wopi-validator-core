@@ -1,0 +1,30 @@
+﻿{
+ "$schema": "http://json-schema.org/draft-04/schema#",
+ "title": "Full WOPI AddActivities Response JSON Schema",
+ "description": "A WOPI AddActivities JSON response",
+ "type": "object",
+ "additionalProperties": false,
+ "properties": {
+   "ActivityResponses": {
+     "type": "array",
+     "items": {
+      "type": "object",
+      "properties": {
+        "Id": {
+          "type": "string",
+          "default": ""
+        },
+        "Status": {
+          "type": "integer",
+          "default": 3
+        },
+        "Message": {
+          "type": "string",
+          "default": ""
+        }
+      },
+      "additionalProperties": false
+    }
+   }
+ }
+}

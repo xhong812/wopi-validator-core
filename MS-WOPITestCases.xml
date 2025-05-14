@@ -332,6 +332,8 @@
               ] }]]>
             </RequestBody>
             <Validators>
+              <JsonSchemaValidator Schema="AddActivitiesRequestSchema" />
+              <JsonSchemaValidator Schema="AddActivitiesResponseSchema" />
               <JsonResponseContentValidator>
                 <StringProperty Name="ActivityResponses[0].Id" IsRequired="true" ExpectedValue="00000001-0000-0000-0000-000000000000" />
               </JsonResponseContentValidator>
@@ -615,6 +617,8 @@
               ] }]]>
             </RequestBody>
             <Validators>
+              <JsonSchemaValidator Schema="AddActivitiesRequestSchema" />
+              <JsonSchemaValidator Schema="AddActivitiesResponseSchema" />
               <JsonResponseContentValidator>
                 <StringProperty Name="ActivityResponses[0].Id" IsRequired="true" ExpectedValue="00000009-0000-0000-0000-000000000000" />
               </JsonResponseContentValidator>
@@ -670,6 +674,8 @@
               ] }]]>
             </RequestBody>
             <Validators>
+              <JsonSchemaValidator Schema="AddActivitiesRequestSchema" />
+              <JsonSchemaValidator Schema="AddActivitiesResponseSchema" />
               <JsonResponseContentValidator>
                 <StringProperty Name="ActivityResponses[0].Id" IsRequired="true" ExpectedValue="0000000a-0000-0000-0000-000000000000" />
               </JsonResponseContentValidator>
@@ -862,6 +868,8 @@
               ] }]]>
             </RequestBody>
             <Validators>
+              <JsonSchemaValidator Schema="AddActivitiesRequestSchema" />
+              <JsonSchemaValidator Schema="AddActivitiesResponseSchema" />
               <Or>
                 <!-- We don't know what order they'll come back in so we need to OR and check both ways -->
                 <JsonResponseContentValidator>
@@ -930,6 +938,8 @@
               ] }]]>
             </RequestBody>
             <Validators>
+              <JsonSchemaValidator Schema="AddActivitiesRequestSchema" />
+              <JsonSchemaValidator Schema="AddActivitiesResponseSchema" />
               <!-- We don't know what order they'll come back in and checking each possibility is too much so we'll just make sure that we got three replies -->
               <JsonResponseContentValidator>
                 <StringProperty Name="ActivityResponses[0].Id" IsRequired="true" />
@@ -976,7 +986,7 @@
         <Requests>
           <CheckFileInfo>
             <Validators>
-              <JsonSchemaValidator Schema="MS-WOPICheckFileInfoSchema" />
+              <JsonSchemaValidator Schema="CheckFileInfoSchema" />
               <ResponseHeaderValidator Header="X-WOPI-ServerVersion" IsRequired="true" />
               <ResponseHeaderValidator Header="X-WOPI-MachineName" IsRequired="true" />
             </Validators>
@@ -1112,7 +1122,7 @@
                 <AbsoluteUrlProperty Name="HostViewUrl" IsRequired="true"/>
                 <AbsoluteUrlProperty Name="HostEditUrl" IsRequired="true"/>
               </JsonResponseContentValidator>
-              <JsonSchemaValidator Schema="MS-WOPIPutRelativeFileSchema" />
+              <JsonSchemaValidator Schema="PutRelativeFileSchema" />
               <ResponseHeaderValidator Header="X-WOPI-ServerVersion" IsRequired="true" />
               <ResponseHeaderValidator Header="X-WOPI-MachineName" IsRequired="true" />
             </Validators>
@@ -2215,7 +2225,7 @@
               <JsonResponseContentValidator>
                 <StringProperty Name="Name" ExpectedValue="ValidatorTestFileRenamed" IsRequired="true" />
               </JsonResponseContentValidator>
-              <JsonSchemaValidator Schema="MS-WOPIRenameFileSchema" />
+              <JsonSchemaValidator Schema="RenameFileSchema" />
               <ResponseHeaderValidator Header="X-WOPI-ServerVersion" IsRequired="true" />
               <ResponseHeaderValidator Header="X-WOPI-MachineName" IsRequired="true" />
             </Validators>

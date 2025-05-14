@@ -72,6 +72,7 @@
     },
     "BreadcrumbBrandUrl": {
       "type": "string",
+      "format": "uri",
       "default": "",
       "optional": true
     },
@@ -92,6 +93,7 @@
     },
     "BreadcrumbFolderUrl": {
       "type": "string",
+      "format": "uri",
       "default": "",
       "optional": true
     },
@@ -112,6 +114,7 @@
     },
     "CloseUrl": {
       "type": "string",
+      "format": "uri",
       "default": "",
       "optional": true
     },
@@ -137,11 +140,13 @@
     },
     "DownloadUrl": {
       "type": "string",
+      "format": "uri",
       "default": "",
       "optional": true
     },
     "EditAndReplyUrl": {
       "type": "string",
+      "format": "uri",
       "default": "",
       "optional": true
     },
@@ -202,11 +207,13 @@
     },
     "FileSharingUrl": {
       "type": "string",
+      "format": "uri",
       "default": "",
       "optional": true
     },
     "FileUrl": {
       "type": "string",
+      "format": "uri",
       "default": "",
       "optional": true
     },
@@ -237,16 +244,19 @@
     },
     "HostEditUrl": {
       "type": "string",
+      "format": "uri",
       "default": "",
       "optional": true
     },
     "HostEmbeddedEditUrl": {
       "type": "string",
+      "format": "uri",
       "default": "",
       "optional": true
     },
     "HostEmbeddedViewUrl": {
       "type": "string",
+      "format": "uri",
       "default": "",
       "optional": true
     },
@@ -262,11 +272,13 @@
     },
     "HostRestUrl": {
       "type": "string",
+      "format": "uri",
       "default": "",
       "optional": true
     },
     "HostViewUrl": {
       "type": "string",
+      "format": "uri",
       "default": "",
       "optional": true
     },
@@ -302,6 +314,7 @@
     },
     "LastModifiedTime": {
       "type": "string",
+      "format": "date-time",
       "default": "",
       "optional": true
     },
@@ -362,6 +375,7 @@
     },
     "PrivacyUrl": {
       "type": "string",
+      "format": "uri",
       "default": "",
       "optional": true
     },
@@ -407,11 +421,13 @@
     },
     "SignInUrl": {
       "type": "string",
+      "format": "uri",
       "default": "",
       "optional": true
     },
     "SignoutUrl": {
       "type": "string",
+      "format": "uri",
       "default": "",
       "optional": true
     },
@@ -556,6 +572,7 @@
     },
     "TermsOfUseUrl": {
       "type": "string",
+      "format": "uri",
       "default": "",
       "optional": true
     },

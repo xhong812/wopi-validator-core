@@ -4,10 +4,6 @@
   "description": "A WOPI EnumerateChildren JSON response",
   "type": "object",
   "additionalProperties": false,
-  "required": [
-    "FolderName",
-    "OwnerId"
-  ],
   "properties": {
     "Children": {
       "Name": "<name>",

@@ -6,239 +6,660 @@
   "additionalProperties": false,
   "required": [
     "BaseFileName",
+    "OfficeCollaborationServiceEndpointUrl",
+    "OpenInClientCommandUrl",
+    "OpenInClientPostMessage",
     "OwnerId",
     "Size",
-    "UserFriendlyName",
-    "UserId",
+    "UserPrincipalName",
     "Version"
   ],
   "properties": {
+    "AADUserObjectId": {
+      "type": "string",
+      "default": "",
+      "optional": true
+    },
+    "AccessTokenExpiry": {
+      "type": "integer",
+      "default": 0,
+      "optional": true
+    },
+    "AllowAddActivitiesUserBatching": {
+      "type": "boolean",
+      "default": false,
+      "optional": true
+    },
     "AllowAdditionalMicrosoftServices": {
-      "type": "boolean"
+      "type": "boolean",
+      "default": false,
+      "optional": true
     },
     "AllowEarlyFeatures": {
-      "type": "boolean"
+      "type": "boolean",
+      "default": false,
+      "optional": true
+    },
+    "AllowErrorReportPrompt": {
+      "type": "boolean",
+      "default": false,
+      "optional": true
     },
     "AllowExternalMarketplace": {
-      "type": "boolean"
+      "type": "boolean",
+      "default": false,
+      "optional": true
     },
-    "AppStateHistoryPostMessage": {
-      "type": "boolean"
+    "AppCatalogUrl": {
+      "type": "string",
+      "default": "",
+      "optional": true
+    },
+    "AppliedPolicyId": {
+      "type": "string",
+      "default": "",
+      "optional": true
     },
     "BaseFileName": {
-      "type": "string"
+      "type": "string",
+      "default": "",
+      "optional": false
     },
     "BreadcrumbBrandName": {
-      "type": "string"
+      "type": "string",
+      "default": "",
+      "optional": true
     },
     "BreadcrumbBrandUrl": {
+      "type": "string",
       "format": "uri",
-      "type": "string"
+      "default": "",
+      "optional": true
     },
     "BreadcrumbDocName": {
-      "type": "string"
+      "type": "string",
+      "default": "",
+      "optional": true
+    },
+    "BreadcrumbDocUrl": {
+      "type": "string",
+      "default": "",
+      "optional": true
     },
     "BreadcrumbFolderName": {
-      "type": "string"
+      "type": "string",
+      "default": "",
+      "optional": true
     },
     "BreadcrumbFolderUrl": {
+      "type": "string",
       "format": "uri",
-      "type": "string"
+      "default": "",
+      "optional": true
+    },
+    "ClientUrl": {
+      "type": "string",
+      "default": "",
+      "optional": true
+    },
+    "CloseButtonClosesWindow": {
+      "type": "boolean",
+      "default": false,
+      "optional": true
     },
     "ClosePostMessage": {
-      "type": "boolean"
+      "type": "boolean",
+      "default": false,
+      "optional": true
     },
     "CloseUrl": {
-      "format": "uri",
-      "type": "string"
-    },
-    "CopyRestrictions": {
       "type": "string",
-      "enum": ["BlockAll", "CurrentDocumentOnly"]
+      "format": "uri",
+      "default": "",
+      "optional": true
+    },
+    "DirectInvokeDAVUrl": {
+      "type": "string",
+      "default": "",
+      "optional": true
+    },
+    "DisableBrowserCachingOfUserContent": {
+      "type": "boolean",
+      "default": false,
+      "optional": true
     },
     "DisablePrint": {
-      "type": "boolean"
+      "type": "boolean",
+      "default": false,
+      "optional": true
     },
     "DisableTranslation": {
-      "type": "boolean"
+      "type": "boolean",
+      "default": false,
+      "optional": true
     },
     "DownloadUrl": {
-      "type": "string"
+      "type": "string",
+      "format": "uri",
+      "default": "",
+      "optional": true
+    },
+    "EditAndReplyUrl": {
+      "type": "string",
+      "format": "uri",
+      "default": "",
+      "optional": true
+    },
+    "EditingCannotSave": {
+      "type": "boolean",
+      "default": false,
+      "optional": true
     },
     "EditModePostMessage": {
-      "type": "boolean"
+      "type": "boolean",
+      "default": false,
+      "optional": true
     },
     "EditNotificationPostMessage": {
-      "type": "boolean"
+      "type": "boolean",
+      "default": false,
+      "optional": true
+    },
+    "EmbeddingPageOrigin": {
+      "type": "string",
+      "default": "",
+      "optional": true
+    },
+    "EmbeddingPageSessionInfo": {
+      "type": "string",
+      "default": "",
+      "optional": true
+    },
+    "EnabledApplicationFeatures": {
+      "type": "array",
+      "default": [],
+      "optional": true
+    },
+    "FileEmbedCommandPostMessage": {
+      "type": "boolean",
+      "default": false,
+      "optional": true
+    },
+    "FileEmbedCommandUrl": {
+      "type": "string",
+      "default": "",
+      "optional": true
     },
     "FileExtension": {
-      "type": "string"
+      "type": "string",
+      "default": "",
+      "optional": true
     },
     "FileNameMaxLength": {
-      "type": "integer"
+      "type": "integer",
+      "default": 250,
+      "optional": true
     },
     "FileSharingPostMessage": {
-      "type": "boolean"
+      "type": "boolean",
+      "default": false,
+      "optional": true
     },
     "FileSharingUrl": {
+      "type": "string",
       "format": "uri",
-      "type": "string"
+      "default": "",
+      "optional": true
     },
     "FileUrl": {
+      "type": "string",
       "format": "uri",
-      "type": "string"
+      "default": "",
+      "optional": true
     },
     "FileVersionPostMessage": {
-      "type": "boolean"
+      "type": "boolean",
+      "default": false,
+      "optional": true
     },
     "FileVersionUrl": {
-      "format": "uri",
-      "type": "string"
+      "type": "string",
+      "default": "",
+      "optional": true
+    },
+    "HostAuthenticationId": {
+      "type": "string",
+      "default": "",
+      "optional": true
+    },
+    "HostAuthenticationIdType": {
+      "type": "string",
+      "default": "",
+      "optional": true
+    },
+    "HostDivSyndicationViewUrl": {
+      "type": "string",
+      "default": "",
+      "optional": true
     },
     "HostEditUrl": {
+      "type": "string",
       "format": "uri",
-      "type": "string"
+      "default": "",
+      "optional": true
+    },
+    "HostEmbeddedEditUrl": {
+      "type": "string",
+      "format": "uri",
+      "default": "",
+      "optional": true
     },
     "HostEmbeddedViewUrl": {
+      "type": "string",
       "format": "uri",
-      "type": "string"
+      "default": "",
+      "optional": true
+    },
+    "HostName": {
+      "type": "string",
+      "default": "",
+      "optional": true
+    },
+    "HostNotes": {
+      "type": "string",
+      "default": "",
+      "optional": true
+    },
+    "HostRestUrl": {
+      "type": "string",
+      "format": "uri",
+      "default": "",
+      "optional": true
     },
     "HostViewUrl": {
+      "type": "string",
       "format": "uri",
-      "type": "string"
+      "default": "",
+      "optional": true
+    },
+    "InsertImagePostMessage": {
+      "type": "boolean",
+      "default": false,
+      "optional": true
+    },
+    "IrmPolicyDescription": {
+      "type": "string",
+      "default": "",
+      "optional": true
+    },
+    "IrmPolicyTitle": {
+      "type": "string",
+      "default": "",
+      "optional": true
     },
     "IsAnonymousUser": {
-      "type": "boolean"
+      "type": "boolean",
+      "default": false,
+      "optional": true
     },
     "IsEduUser": {
-      "type": "boolean"
+      "type": "boolean",
+      "default": false,
+      "optional": true
+    },
+    "IsYammerEnabled": {
+      "type": "boolean",
+      "default": false,
+      "optional": true
     },
     "LastModifiedTime": {
+      "type": "string",
       "format": "date-time",
-      "type": "string"
+      "default": "",
+      "optional": true
     },
     "LicenseCheckForEditIsEnabled": {
-      "type": "boolean"
+      "type": "boolean",
+      "default": false,
+      "optional": true
+    },
+    "LicensedOrganization": {
+      "type": "string",
+      "default": "",
+      "optional": true
+    },
+    "OfficeCollaborationServiceEndpointUrl": {
+      "type": "string",
+      "default": "",
+      "optional": false
+    },
+    "OpenInClientCommandUrl": {
+      "type": "string",
+      "default": "",
+      "optional": false
+    },
+    "OpenInClientPostMessage": {
+      "type": "boolean",
+      "default": false,
+      "optional": false
     },
     "OwnerId": {
-      "type": "string"
+      "type": "string",
+      "default": "",
+      "optional": false
+    },
+    "PermissionsPostMessage": {
+      "type": "boolean",
+      "default": false,
+      "optional": true
+    },
+    "PolicyCheckPostMessage": {
+      "type": "boolean",
+      "default": false,
+      "optional": true
     },
     "PostMessageOrigin": {
+      "type": "string",
+      "default": "",
+      "optional": true
+    },
+    "PresenceProvider": {
+      "type": "string",
+      "default": "",
+      "optional": true
+    },
+    "PresenceUserId": {
+      "type": "string",
+      "default": "",
+      "optional": true
+    },
+    "PrivacyUrl": {
+      "type": "string",
       "format": "uri",
-      "type": "string"
+      "default": "",
+      "optional": true
+    },
+    "ProtectedFile": {
+      "type": "boolean",
+      "default": false,
+      "optional": true
+    },
+    "ProtectInClient": {
+      "type": "boolean",
+      "default": false,
+      "optional": true
     },
     "ReadOnly": {
-      "type": "boolean"
+      "type": "boolean",
+      "default": false,
+      "optional": true
+    },
+    "ReportAbusePostMessage": {
+      "type": "boolean",
+      "default": false,
+      "optional": true
+    },
+    "ReportAbuseUrl": {
+      "type": "string",
+      "default": "",
+      "optional": true
     },
     "RestrictedWebViewOnly": {
-      "type": "boolean"
+      "type": "boolean",
+      "default": false,
+      "optional": true
+    },
+    "SafeLinksStatus": {
+      "type": "string",
+      "default": "",
+      "optional": true
     },
     "SHA256": {
-      "type": "string"
+      "type": "string",
+      "default": "",
+      "optional": true
     },
     "SignInUrl": {
+      "type": "string",
       "format": "uri",
-      "type": "string"
+      "default": "",
+      "optional": true
     },
     "SignoutUrl": {
+      "type": "string",
       "format": "uri",
-      "type": "string"
+      "default": "",
+      "optional": true
     },
     "Size": {
-      "type": "number"
+      "type": "integer",
+      "default": -1,
+      "optional": false
     },
     "SupportedShareUrlTypes": {
       "type": "array",
       "items": {
         "type": "string",
-        "enum": [ "ReadOnly", "ReadWrite" ]
-      }
+        "enum": ["ReadOnly","ReadWrite"]
+      },
+      "default": [],
+      "optional": true
     },
     "SupportsAddActivities": {
-      "type": "boolean"
+      "type": "boolean",
+      "default": false,
+      "optional": true
+    },
+    "SupportsCheckPolicy": {
+      "type": "boolean",
+      "default": false,
+      "optional": true
+    },
+    "SupportsCheckUserAccess": {
+      "type": "boolean",
+      "default": false,
+      "optional": true
+    },
+    "SupportsCoauth": {
+      "type": "boolean",
+      "default": false,
+      "optional": true
     },
     "SupportsCobalt": {
-      "type": "boolean"
+      "type": "boolean",
+      "default": false,
+      "optional": true
+    },
+    "SupportsContactsResolution": {
+      "type": "boolean",
+      "default": false,
+      "optional": true
     },
     "SupportsContainers": {
-      "type": "boolean"
+      "type": "boolean",
+      "default": false,
+      "optional": true
     },
     "SupportsDeleteFile": {
-      "type": "boolean"
+      "type": "boolean",
+      "default": false,
+      "optional": true
     },
     "SupportsEcosystem": {
-      "type": "boolean"
+      "type": "boolean",
+      "default": false,
+      "optional": true
     },
     "SupportsExtendedLockLength": {
-      "type": "boolean"
+      "type": "boolean",
+      "default": false,
+      "optional": true
+    },
+    "SupportsFileCreation": {
+      "type": "boolean",
+      "default": false,
+      "optional": true
+    },
+    "SupportsFileUserValue": {
+      "type": "boolean",
+      "default": false,
+      "optional": true
     },
     "SupportsFolders": {
-      "type": "boolean"
+      "type": "boolean",
+      "default": false,
+      "optional": true
     },
     "SupportsGetActivities": {
-      "type": "boolean"
+      "type": "boolean",
+      "default": false,
+      "optional": true
     },
     "SupportsGetLock": {
-      "type": "boolean"
+      "type": "boolean",
+      "default": false,
+      "optional": true
+    },
+    "SupportsGrantUserAccess": {
+      "type": "boolean",
+      "default": false,
+      "optional": true
     },
     "SupportsLocks": {
-      "type": "boolean"
+      "type": "boolean",
+      "default": false,
+      "optional": true
+    },
+    "SupportsPolicies": {
+      "type": "boolean",
+      "default": false,
+      "optional": true
     },
     "SupportsRename": {
-      "type": "boolean"
+      "type": "boolean",
+      "default": false,
+      "optional": true
+    },
+    "SupportsReviewing": {
+      "type": "boolean",
+      "default": false,
+      "optional": true
+    },
+    "SupportsScenarioLinks": {
+      "type": "boolean",
+      "default": false,
+      "optional": true
+    },
+    "SupportsSecureStore": {
+      "type": "boolean",
+      "default": false,
+      "optional": true
     },
     "SupportsUpdate": {
-      "type": "boolean"
-    },
-    "SupportsUserAccess": {
-      "type": "boolean"
+      "type": "boolean",
+      "default": false,
+      "optional": true
     },
     "SupportsUserInfo": {
-      "type": "boolean"
+      "type": "boolean",
+      "default": false,
+      "optional": true
+    },
+    "TenantId": {
+      "type": "string",
+      "default": "",
+      "optional": true
+    },
+    "TermsOfUseUrl": {
+      "type": "string",
+      "format": "uri",
+      "default": "",
+      "optional": true
+    },
+    "TimeZone": {
+      "type": "string",
+      "default": "",
+      "optional": true
     },
     "UniqueContentId": {
-      "type": "string"
+      "type": "string",
+      "default": "",
+      "optional": true
     },
     "UserCanAttend": {
-      "type": "boolean"
+      "type": "boolean",
+      "default": false,
+      "optional": true
     },
     "UserCanNotWriteRelative": {
-      "type": "boolean"
+      "type": "boolean",
+      "default": false,
+      "optional": true
     },
     "UserCanPresent": {
-      "type": "boolean"
+      "type": "boolean",
+      "default": false,
+      "optional": true
     },
     "UserCanRename": {
-      "type": "boolean"
+      "type": "boolean",
+      "default": false,
+      "optional": true
+    },
+    "UserCanReview": {
+      "type": "boolean",
+      "default": false,
+      "optional": true
     },
     "UserCanWrite": {
-      "type": "boolean"
+      "type": "boolean",
+      "default": false,
+      "optional": true
     },
     "UserFriendlyName": {
-      "type": "string"
+      "type": "string",
+      "default": "",
+      "optional": true
     },
     "UserId": {
-      "type": "string"
+      "type": "string",
+      "default": "",
+      "optional": true
     },
     "UserInfo": {
-      "type": "string"
+      "type": "string",
+      "default": "",
+      "optional": true
+    },
+    "UserPrincipalName": {
+      "type": "string",
+      "default": "",
+      "optional": false
     },
     "Version": {
-      "type": "string"
+      "type": "string",
+      "default": "",
+      "optional": false
+    },
+    "WebEditingDisabled": {
+      "type": "boolean",
+      "default": false,
+      "optional": true
     },
     "WorkflowPostMessage": {
-      "type": "boolean"
+      "type": "boolean",
+      "default": "",
+      "optional": true
     },
     "WorkflowType": {
       "type": "array",
-      "items": {
-        "type": "string",
-        "enum": [ "Assign", "Submit" ]
-      }
+      "default": [],
+      "optional": true
     },
     "WorkflowUrl": {
-      "format": "uri",
-      "type": "string"
+      "type": "string",
+      "default": "",
+      "optional": true
     }
   }
 }

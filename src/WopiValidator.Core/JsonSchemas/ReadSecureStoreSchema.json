@@ -10,16 +10,23 @@
   ],
   "properties": {
     "UserName": {
-      "type": "string"
+      "type": "string",
+      "optional": false
     },
     "Password": {
-      "type": "string"
+      "type": "string",
+      "default": "",
+      "optional": false
     },
     "IsWindowsCredentials": {
-      "type": "boolean"
+      "type": "boolean",
+      "default": "false",
+      "optional": true
     },
     "IsGroup": {
-      "type": "boolean"
+      "type": "boolean",
+      "default": "false",
+      "optional": true
     }
   }
 }

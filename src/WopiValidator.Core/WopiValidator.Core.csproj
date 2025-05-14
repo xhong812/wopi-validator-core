@@ -15,23 +15,25 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="JsonSchemas\AddActivitiesRequestSchema.json" />
+    <None Remove="JsonSchemas\AddActivitiesResponseSchema.json" />
     <None Remove="JsonSchemas\CheckFileInfoSchema.json" />
-    <None Remove="JsonSchemas\MS-WOPICheckFileInfoSchema.json" />
-    <None Remove="JsonSchemas\MS-WOPICheckFolderInfoSchema.json" />
-    <None Remove="JsonSchemas\MS-WOPIEnumerateChildrenSchema.json" />
+    <None Remove="JsonSchemas\CheckFolderInfoSchema.json" />
+    <None Remove="JsonSchemas\EnumerateChildrenSchema.json" />
     <None Remove="JsonSchemas\MS-WOPIGetShareUrlSchema.json" />
-    <None Remove="JsonSchemas\MS-WOPIPutRelativeFileSchema.json" />
-    <None Remove="JsonSchemas\MS-WOPIRenameFileSchema.json" />
+    <None Remove="JsonSchemas\PutRelativeFileSchema.json" />
     <None Remove="JsonSchemas\ReadSecureStoreSchema.json" />
+    <None Remove="JsonSchemas\RenameFileSchema.json" />
   </ItemGroup>
 
   <ItemGroup>
+    <EmbeddedResource Include="JsonSchemas\AddActivitiesRequestSchema.json" />
+    <EmbeddedResource Include="JsonSchemas\AddActivitiesResponseSchema.json" />
+    <EmbeddedResource Include="JsonSchemas\EnumerateChildrenSchema.json" />
+    <EmbeddedResource Include="JsonSchemas\RenameFileSchema.json" />
     <EmbeddedResource Include="JsonSchemas\CheckFileInfoSchema.json" />
-    <EmbeddedResource Include="JsonSchemas\MS-WOPIEnumerateChildrenSchema.json" />
-    <EmbeddedResource Include="JsonSchemas\MS-WOPIRenameFileSchema.json" />
-    <EmbeddedResource Include="JsonSchemas\MS-WOPICheckFileInfoSchema.json" />
-    <EmbeddedResource Include="JsonSchemas\MS-WOPIPutRelativeFileSchema.json" />
-    <EmbeddedResource Include="JsonSchemas\MS-WOPICheckFolderInfoSchema.json" />
+    <EmbeddedResource Include="JsonSchemas\PutRelativeFileSchema.json" />
+    <EmbeddedResource Include="JsonSchemas\CheckFolderInfoSchema.json" />
     <EmbeddedResource Include="JsonSchemas\ReadSecureStoreSchema.json" />
   </ItemGroup>
 

@@ -1,0 +1,155 @@
+﻿{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "title": "A WOPI AddActivities Request JSON Schema",
+  "description": "A WOPI AddActivities JSON request",
+  "type": "object",
+  "additionalProperties": true,
+  "properties": {
+    "Activities": {
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/activity"
+      }
+    }
+  },
+  "definitions": {
+    "activity": {
+      "type": "object",
+      "properties": {
+        "Type": {
+          "type": "string",
+          "default": "",
+          "optional": true
+        },
+        "Id": {
+          "type": "string",
+          "default": "",
+          "optional": true
+        },
+        "Timestamp": {
+          "type": "string",
+          "default": "",
+          "optional": true
+        },
+        "HostTimestamp": {
+          "type": "string",
+          "default": "",
+          "optional": true
+        },
+        "People": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/person"
+          },
+          "default": []
+        },
+        "Data": {
+          "type": "object",
+          "properties": {
+            "CommentText": {
+              "type": "string",
+              "default": "",
+              "optional": true
+            },
+            "ContentAction": {
+              "type": "string",
+              "default": "",
+              "optional": true
+            },
+            "ContentId": {
+              "type": "string",
+              "default": "",
+              "optional": true
+            },
+            "NavigationId": {
+              "type": "string",
+              "default": "",
+              "optional": true
+            },
+            "ContentOrigin": {
+              "type": "string",
+              "default": "",
+              "optional": true
+            },
+            "ParentContentId": {
+              "type": "string",
+              "default": "",
+              "optional": true
+            },
+            "Revisions": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              },
+              "default": [],
+              "optional": true
+            }
+          },
+          "additionalProperties": false
+        }
+      },
+      "additionalProperties": false
+    },
+    "person": {
+      "type": "object",
+      "properties": {
+        "Id": {
+          "type": "string",
+          "default": ""
+        },
+        "Provider": {
+          "type": "string",
+          "default": ""
+        },
+        "Name": {
+          "type": "string",
+          "default": ""
+        },
+        "PictureUrl": {
+          "type": "string",
+          "default": ""
+        },
+        "Email": {
+          "type": "string",
+          "default": ""
+        },
+        "Roles": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "default": []
+        },
+        "HostId": {
+          "type": "string",
+          "default": null
+        },
+        "HostProvider": {
+          "type": "string",
+          "default": null
+        },
+        "HostName": {
+          "type": "string",
+          "default": null
+        },
+        "HostPictureUrl": {
+          "type": "string",
+          "default": null
+        },
+        "HostEmail": {
+          "type": "string",
+          "default": null
+        },
+        "HostRoles": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "default": null
+        }
+      },
+      "additionalProperties": true
+    }
+  }
+}
+
